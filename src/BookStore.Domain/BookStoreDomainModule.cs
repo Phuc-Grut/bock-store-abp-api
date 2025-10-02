@@ -17,6 +17,8 @@ using Volo.Abp.Emailing;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.TenantManagement;
+using BookStore.IRepositories;
+using BookStore.Implement;
 
 namespace BookStore;
 
@@ -43,7 +45,6 @@ public class BookStoreDomainModule : AbpModule
         {
             options.IsEnabled = MultiTenancyConsts.IsEnabled;
         });
-
 
 #if DEBUG
         context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());

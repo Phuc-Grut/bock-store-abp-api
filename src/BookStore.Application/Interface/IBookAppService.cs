@@ -9,13 +9,12 @@ using Volo.Abp.Application.Services;
 
 namespace BookStore.Interface
 {
-    public interface IBookAppService :
-     ICrudAppService< //Defines CRUD methods
-         BookDto, //Used to show books
-         Guid, //Primary key of the book entity
-         PagedAndSortedResultRequestDto, //Used for paging/sorting
-         CreateUpdateBookDto> //Used to create/update a book
+    public interface IBookAppService
     {
-
+        Task<BookDto> GetAsync(Guid id);
+        Task<PagedResultDto<BookDto>> GetListAsync(PagedAndSortedResultRequestDto input);
+        Task<BookDto> CreateAsync(CreateUpdateBookDto input);
+        Task<BookDto> UpdateAsync(Guid id, CreateUpdateBookDto input);
+        Task DeleteAsync(Guid id);
     }
 }

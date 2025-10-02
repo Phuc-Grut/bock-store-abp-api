@@ -1,12 +1,15 @@
-﻿using Volo.Abp.PermissionManagement;
-using Volo.Abp.SettingManagement;
+﻿using BookStore.Implement;
+using BookStore.Interface;
+using BookStore.IRepositories;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Account;
-using Volo.Abp.Identity;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.FeatureManagement;
+using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
+using Volo.Abp.PermissionManagement;
+using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
-
 namespace BookStore;
 
 [DependsOn(
@@ -27,5 +30,7 @@ public class BookStoreApplicationModule : AbpModule
         {
             options.AddMaps<BookStoreApplicationModule>();
         });
+        context.Services.AddScoped<IBookRepository, BookRepository>();
+        context.Services.AddScoped<IBookAppService, BookAppService>();
     }
 }
