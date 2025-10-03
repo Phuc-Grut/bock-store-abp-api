@@ -22,35 +22,35 @@ namespace BookStore.Controllers
 
 
         [HttpGet("api/app/book")]
-        public async Task<ActionResult<PagedResultDto<BookDto>>> GetBooksAsync([FromQuery] PagedAndSortedResultRequestDto input)
+        public async Task<PagedResultDto<BookDto>> GetBooksAsync([FromQuery] PagedAndSortedResultRequestDto input)
         {
             return await _bookAppService.GetListAsync(input);
         }
 
         [HttpGet("api/app/book/{id}")]
-        public async Task<ActionResult<BookDto>> GetBookAsync(Guid id)
+        public async Task<BookDto> GetBookAsync(Guid id)
         {
             var result = await _bookAppService.GetAsync(id);
-            return Ok(result);
+            return result;
         }
 
         [HttpPost("api/app/book")]
-        public async Task<ActionResult<BookDto>> CreateBookAsync([FromBody] CreateUpdateBookDto input)
+        public async Task<BookDto> CreateBookAsync([FromBody] CreateUpdateBookDto input)
         {
             var result = await _bookAppService.CreateAsync(input);
-            return Ok(result);
+            return result;
         }
         [HttpPut("api/app/book/{id}")]
-        public async Task<ActionResult<BookDto>> UpdateBookAsync(Guid id, [FromBody] CreateUpdateBookDto input)
+        public async Task<BookDto> UpdateBookAsync(Guid id, [FromBody] CreateUpdateBookDto input)
         {
             var result = await _bookAppService.UpdateAsync(id, input);
-            return Ok(result);
+            return result;
         }
         [HttpDelete("api/app/book/{id}")]
-        public async Task<IActionResult> DeleteBookAsync(Guid id)
+        public async Task DeleteBookAsync(Guid id)
         {
             await _bookAppService.DeleteAsync(id);
-            return NoContent();
+            return;
         }
 
     }

@@ -19,38 +19,38 @@ namespace BookStore.Controllers
         }
 
         [HttpGet("api/app/education/{id}")]
-        public async Task<ActionResult<EducationDto>> GetBookAsync(Guid id)
+        public async Task<EducationDto> GetBookAsync(Guid id)
         {
             var result = await _educationAppService.GetAsync(id);
-            return Ok(result);
+            return result;
         }
 
         [HttpPost("api/app/education")]
-        public async Task<ActionResult<EducationDto>> CreateBookAsync([FromBody] CreateUpdateEducationDto input)
+        public async Task<EducationDto> CreateBookAsync([FromBody] CreateUpdateEducationDto input)
         {
             var result = await _educationAppService.CreateAsync(input);
-            return Ok(result);
+            return result;
         }
 
         [HttpGet("api/app/education")]
-        public async Task<ActionResult<PagedResultDto<EducationDto>>> GetListAsync([FromQuery] PagedAndSortedResultRequestDto input)
+        public async Task<PagedResultDto<EducationDto>> GetListAsync([FromQuery] PagedAndSortedResultRequestDto input)
         {
             var result = await _educationAppService.GetListAsync(input);
-            return Ok(result);
+            return result;
         }
 
         [HttpDelete("api/app/education/{id}")]
-        public async Task<IActionResult> DeleteBookAsync(Guid id)
+        public async Task DeleteBookAsync(Guid id)
         {
             await _educationAppService.DeleteAsync(id);
-            return NoContent();
+            return;
         }
 
         [HttpPut("api/app/education/{id}")]
-        public async Task<ActionResult<EducationDto>> UpdateBookAsync(Guid id, [FromBody] CreateUpdateEducationDto input)
+        public async Task<EducationDto> UpdateBookAsync(Guid id, [FromBody] CreateUpdateEducationDto input)
         {
             var result = await _educationAppService.UpdateAsync(id, input);
-            return Ok(result);
+            return result;
         }
     }
 }
