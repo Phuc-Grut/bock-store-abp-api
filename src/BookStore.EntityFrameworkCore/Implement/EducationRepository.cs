@@ -1,5 +1,6 @@
 ﻿using BookStore.Entities;
 using BookStore.EntityFrameworkCore;
+using BookStore.Enum;
 using BookStore.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using Polly;
@@ -28,7 +29,8 @@ namespace BookStore.Implement
         public async Task DeleteAsync(Guid id)
         {
             var education = await GetByIdAsync(id);
-            _context.Educations.Remove(education);
+            education.Status = EducationStatus.Deleted;
+
             await _context.SaveChangesAsync();
         }
 
@@ -38,15 +40,26 @@ namespace BookStore.Implement
             return education;
         }
 
-        public Task<List<Education>> GetListAsync(int skipCount, int maxResultCount, string sorting)
+        public async Task<(int totalCount, List<Education> items)> GetListAsync(int skipCount, int maxResultCount, string sorting)
         {
-            var query = _context.Educations.AsQueryable();
-            if (!string.IsNullOrEmpty(sorting))
+            var query = _context.Educations
+                .Where(e => e.Status != EducationStatus.Deleted);
+
+            var totalCount = await query.CountAsync();
+
+            if (!string.IsNullOrWhiteSpace(sorting))
             {
                 query = query.OrderBy(sorting);
             }
-            return query.Skip(skipCount).Take(maxResultCount).ToListAsync();
+
+            var items = await query
+                .Skip(skipCount)
+                .Take(maxResultCount)
+                .ToListAsync();
+
+            return (totalCount, items);
         }
+
 
         public async Task<Education> InsertAsync(Education education)
         {

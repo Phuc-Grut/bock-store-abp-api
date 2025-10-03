@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace BookStore.DTO
 {
-    public class PageResult
+    public class PagedResult<T>
     {
-        public string? Sorting { get; set; }
-        public int? SkipCount { get; set; }
-        public int? MaxResultCount { get; set; }
+        public List<T> Items { get; set; } = new List<T>();
+        public int TotalCount { get; set; }
     }
 }

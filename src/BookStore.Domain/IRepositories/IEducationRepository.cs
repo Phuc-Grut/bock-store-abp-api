@@ -10,7 +10,7 @@ namespace BookStore.IRepositories
     public interface IEducationRepository
     {
         Task<Education> GetByIdAsync(Guid id);
-        Task<List<Education>> GetListAsync(int skipCount, int maxResultCount, string sorting);
+        Task<(int totalCount, List<Education> items)> GetListAsync(int skipCount, int maxResultCount, string sorting);
         Task<Education> InsertAsync(Education education);
         Task<Education?> UpdateAsync(Education education);
         Task DeleteAsync(Guid id);

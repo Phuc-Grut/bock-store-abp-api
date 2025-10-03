@@ -32,5 +32,8 @@ public class BookStoreApplicationModule : AbpModule
         });
         context.Services.AddScoped<IBookRepository, BookRepository>();
         context.Services.AddScoped<IBookAppService, BookAppService>();
+
+        context.Services.AddScoped<IEducationRepository, EducationRepository>();
+        context.Services.AddScoped<IEducationAppServices, EducationAppServices>();
     }
 }
