@@ -43,6 +43,8 @@ public class BookStoreDbContext :
      */
 
     // Identity
+    public DbSet<AppUser> AppUsers { get; set; }
+    public DbSet<Education> Educations { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<IdentityUser> Users { get; set; }
     public DbSet<IdentityRole> Roles { get; set; }
@@ -96,6 +98,27 @@ public class BookStoreDbContext :
                 BookStoreConsts.DbSchema);
             b.ConfigureByConvention();
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+        });
+
+        builder.Entity<Education>(e =>
+        {
+            e.ToTable(BookStoreConsts.DbTablePrefix + "Education",
+                 BookStoreConsts.DbSchema);
+            e.ConfigureByConvention();
+            e.Property(x => x.Degree).IsRequired().HasMaxLength(128);
+        });
+
+        builder.Entity<AppUser>(b =>
+        {
+            b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "Users",
+                      AbpIdentityDbProperties.DbSchema);
+
+            b.Property(u => u.EducationId).IsRequired(false);
+
+            b.HasOne(u => u.Education)
+             .WithMany(e => e.Users)
+             .HasForeignKey(u => u.EducationId)
+             .OnDelete(DeleteBehavior.SetNull);
         });
     }
 }
